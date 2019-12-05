@@ -5,12 +5,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Software.MainPage">
-
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+    <StackLayout Margin="10,35,10,10">
+        <Label Text="Notes"
+               HorizontalOptions="Center"
+               FontAttributes="Bold" />
+        <Editor x:Name="editor"
+                Placeholder="Enter your note"
+                HeightRequest="100" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Text="Save"
+                    Clicked="OnSaveButtonClicked" />
+            <Button Grid.Column="1"
+                    Text="Delete"
+                    Clicked="OnDeleteButtonClicked"/>
+        </Grid>
     </StackLayout>
 
 </ContentPage>
