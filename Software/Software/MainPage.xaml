@@ -23,9 +23,9 @@
             <Button Grid.Column="1"
                     Text="Delete"
                     Clicked="OnDeleteButtonClicked"/>
-            <Button Text="demo"
-                    Clicked="OnButtonClicked"
-                   />
+            <Button Grid.Column="2"
+                    Text="demo"
+                    Clicked="OnButtonClicked"/>
         </Grid>
     </StackLayout>
 
