@@ -58,8 +58,10 @@ namespace Software
             }
         }
 
-        protected void Button_Clicked(object sender, EventArgs e)
+        private void Button_Clicked(object sender, EventArgs e)
         {
+
+
             Console.WriteLine("deepak 2   ",fName, "");
 
             File.WriteAllText(fName, editor.Text);
