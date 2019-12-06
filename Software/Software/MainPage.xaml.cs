@@ -7,10 +7,11 @@ namespace Software
     public partial class MainPage : ContentPage
     {
         string _fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "notes.txt");
-
+        public string fName;
         public MainPage()
         {
             InitializeComponent();
+
 
             if (File.Exists(_fileName))
             {
@@ -41,7 +42,8 @@ namespace Software
                 if (!string.IsNullOrEmpty(myResult.FileName)) //Just the file name, it doesn't has the path
                 {
                     string _fileName = myResult.FilePath;
-                    Console.WriteLine("deepak     "+_fileName);
+                    fName = _fileName;
+                    Console.WriteLine("deepak 1    "+fName);
                     if (File.Exists(_fileName))
                     {
                         editor.Text = File.ReadAllText(_fileName);
@@ -56,6 +58,15 @@ namespace Software
             }
         }
 
+        protected void Button_Clicked(object sender, EventArgs e)
+        {
+            Console.WriteLine("deepak 2   ",fName, "");
+
+            File.WriteAllText(fName, editor.Text);
+            editor.Text = string.Empty;
+           Console.WriteLine("deepak    ", File.ReadAllText(fName), "");
+            result.Text = File.ReadAllText(fName);
+        }
     }
 
 }

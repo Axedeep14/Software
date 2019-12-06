@@ -17,6 +17,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button Text="Save"
                     Clicked="OnSaveButtonClicked" />
@@ -26,7 +27,13 @@
             <Button Grid.Column="2"
                     Text="demo"
                     Clicked="OnButtonClicked"/>
+            <Button Grid.Column="3"
+                    Text="Save Changes"
+                    Clicked="Button_Clicked"/>
         </Grid>
+        <Editor x:Name="result"
+                Placeholder="result"
+                HeightRequest="100" />
     </StackLayout>
 
 </ContentPage>
