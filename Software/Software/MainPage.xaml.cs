@@ -51,7 +51,9 @@ namespace Software
                     /*foreach (byte b in myResult.DataArray) //Empty array
                         b.ToString();*/
                 }
-            }
+
+          
+           }
             catch (InvalidOperationException ex)
             {
                 ex.ToString(); //"Only one operation can be active at a time"
@@ -68,6 +70,50 @@ namespace Software
             editor.Text = string.Empty;
            Console.WriteLine("deepak    ", File.ReadAllText(fName), "");
             result.Text = File.ReadAllText(fName);
+        }
+
+
+        /////this is new function
+
+
+        private async void UploadImage()
+        {
+            //variable
+            var url = "https://ravi-s-mishra.herokuapp.com/event_api/addevent";
+            var file = fName;
+
+            try
+            {
+                //read file into upfilebytes array
+                var upfilebytes = File.ReadAllBytes(file);
+
+                //create new HttpClient and MultipartFormDataContent and add our file, and StudentId
+                HttpClient client = new HttpClient();
+                MultipartFormDataContent content = new MultipartFormDataContent();
+                ByteArrayContent baContent = new ByteArrayContent(upfilebytes);
+                StringContent description = new StringContent("this is random");
+                content.Add(baContent, "eventPic", myResult.FileName);
+                content.Add(description, "StudentId");
+
+
+                //upload MultipartFormDataContent content async and store response in response var
+                var response =
+                    await client.PostAsync(url, content);
+
+                //read response result as a string async into json var
+                var responsestr = response.Content.ReadAsStringAsync().Result;
+
+                //debug
+                Debug.WriteLine(responsestr);
+
+            }
+            catch (Exception e)
+            {
+                //debug
+                Debug.WriteLine("Exception Caught: " + e.ToString());
+
+                return;
+            }
         }
     }
 
