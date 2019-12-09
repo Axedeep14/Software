@@ -10,7 +10,7 @@
                HorizontalOptions="Center"
                FontAttributes="Bold" />
         <Editor x:Name="editor"
-                Placeholder="Enter your note"
+                Placeholder="Selected file data"
                 HeightRequest="100" />
         <Grid>
             <Grid.ColumnDefinitions>
@@ -19,20 +19,15 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Text="Save"
-                    Clicked="OnSaveButtonClicked" />
             <Button Grid.Column="1"
-                    Text="Delete"
-                    Clicked="OnDeleteButtonClicked"/>
+                    Text="File"
+                    Clicked="OnFileSelect"/>
             <Button Grid.Column="2"
-                    Text="demo"
-                    Clicked="OnButtonClicked"/>
-            <Button Grid.Column="3"
                     Text="Save Changes"
-                    Clicked="Button_Clicked"/>
+                    Clicked="OnEditFile"/>
         </Grid>
         <Editor x:Name="result"
-                Placeholder="result"
+                Placeholder="Result after editing the file"
                 HeightRequest="100" />
     </StackLayout>
 

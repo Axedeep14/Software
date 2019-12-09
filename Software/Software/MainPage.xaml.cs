@@ -6,34 +6,12 @@ namespace Software
 {
     public partial class MainPage : ContentPage
     {
-        string _fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "notes.txt");
-        public string fName;
+        string _filePath;
         public MainPage()
         {
             InitializeComponent();
-
-
-            if (File.Exists(_fileName))
-            {
-                editor.Text = File.ReadAllText(_fileName);
-            }
         }
-
-        protected void OnSaveButtonClicked(object sender, EventArgs e)
-        {
-            File.WriteAllText(_fileName, editor.Text);
-        }
-
-        protected void OnDeleteButtonClicked(object sender, EventArgs e)
-        {
-            if (File.Exists(_fileName))
-            {
-                File.Delete(_fileName);
-            }
-            editor.Text = string.Empty;
-        }
-
-        protected async void OnButtonClicked (object sender, EventArgs e)
+        protected async void OnFileSelect(object sender, EventArgs e)
         {
             try
             {
@@ -41,79 +19,24 @@ namespace Software
                 var myResult = await crossFilePicker.PickFile();
                 if (!string.IsNullOrEmpty(myResult.FileName)) //Just the file name, it doesn't has the path
                 {
-                    string _fileName = myResult.FilePath;
-                    fName = _fileName;
-                    Console.WriteLine("deepak 1    "+fName);
-                    if (File.Exists(_fileName))
+                    _filePath = myResult.FilePath;
+                    if (File.Exists(_filePath))
                     {
-                        editor.Text = File.ReadAllText(_fileName);
+                        editor.Text = File.ReadAllText(_filePath);
                     }
-                    /*foreach (byte b in myResult.DataArray) //Empty array
-                        b.ToString();*/
                 }
-
-          
            }
             catch (InvalidOperationException ex)
             {
-                ex.ToString(); //"Only one operation can be active at a time"
+                ex.ToString(); 
             }
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void OnEditFile(object sender, EventArgs e)
         {
-
-
-            Console.WriteLine("deepak 2   ",fName, "");
-
-            File.WriteAllText(fName, editor.Text);
+            File.WriteAllText(_filePath, editor.Text);
             editor.Text = string.Empty;
-           Console.WriteLine("deepak    ", File.ReadAllText(fName), "");
-            result.Text = File.ReadAllText(fName);
-        }
-
-
-        /////this is new function
-
-
-        private async void UploadImage()
-        {
-            //variable
-            var url = "https://ravi-s-mishra.herokuapp.com/event_api/addevent";
-            var file = fName;
-
-            try
-            {
-                //read file into upfilebytes array
-                var upfilebytes = File.ReadAllBytes(file);
-
-                //create new HttpClient and MultipartFormDataContent and add our file, and StudentId
-                HttpClient client = new HttpClient();
-                MultipartFormDataContent content = new MultipartFormDataContent();
-                ByteArrayContent baContent = new ByteArrayContent(upfilebytes);
-                StringContent description = new StringContent("this is random");
-                content.Add(baContent, "eventPic", myResult.FileName);
-                content.Add(description, "StudentId");
-
-
-                //upload MultipartFormDataContent content async and store response in response var
-                var response =
-                    await client.PostAsync(url, content);
-
-                //read response result as a string async into json var
-                var responsestr = response.Content.ReadAsStringAsync().Result;
-
-                //debug
-                Debug.WriteLine(responsestr);
-
-            }
-            catch (Exception e)
-            {
-                //debug
-                Debug.WriteLine("Exception Caught: " + e.ToString());
-
-                return;
-            }
+            result.Text = File.ReadAllText(_filePath);
         }
     }
 
